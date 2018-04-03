@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.makeronly.rbac.repo.PrivilegeMapper">
+    <select id="get" parameterType="Long" resultType="Privilege">
+        SELECT id,type FROM privilege WHERE id=#{vale}
+    </select>
+    <insert id="save" parameterType="Privilege">
+        INSERT INTO privilege VALUES (#{id,jdbcType=BIGINT},#{type,jdbcType=INTEGER})
+    </insert>
+    <delete id="delete" parameterType="Long">
+        DELETE FROM privilege WHERE id=#{value}
+    </delete>
+    <update id="update" parameterType="Privilege">
+        UPDATE privilege SET type=#{type,jdbcType=INTEGER} WHERE id=#{id,jdbcType=BIGINT}
+    </update>
+</mapper>

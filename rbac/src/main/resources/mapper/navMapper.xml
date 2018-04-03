@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.makeronly.nav.repo.NavMapper">
+    <select id="get" parameterType="Long" resultType="Navigation">
+        SELECT id,name,url,pid
+        FROM  navigation
+        WHERE id=#{value}
+    </select>
+    <insert id="save" parameterType="Navigation">
+        INSERT INTO navigation VALUES(
+          #{id,jdbcType=BIGINT},
+          #{name,jdbcType=VARCHAR},
+          #{url,jdbcType=VARCHAR},
+          #{pid,jdbcType=BIGINT}
+        )
+    </insert>
+    <delete id="delete" parameterType="Long">
+        DELETE FROM navigation WHERE id=#{value}
+    </delete>
+    <update id="update" parameterType="Navigation">
+        UPDATE navigation
+        SET name=#{name,jdbcType=VARCHAR},url=#{url,jdbcType=VARCHAR},pid=#{pid,jdbcType=BIGINT}
+        WHERE id=#{id,jdbcType=BIGINT}
+    </update>
+</mapper>

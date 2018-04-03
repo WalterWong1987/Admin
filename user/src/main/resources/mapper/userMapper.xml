@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.makeronly.user.repo.UserMapper">
+    <sql id="userColumns">
+        id,name,nickname,gender,phone,email,avatar
+    </sql>
+
+    <select id="get" parameterType="Long" resultType="User">
+        SELECT <include refid="userColumns"/> FROM user WHERE id=#{vale}
+    </select>
+
+    <insert id="save" parameterType="User">
+        INSERT INTO user(id,name,nickname,gender,phone,email,avatar) VALUES (
+          #{id,jdbcType=BIGINT},
+          #{name,jdbcType=VARCHAR},
+          #{nickname,jdbcType=VARCHAR},
+          #{gender,jdbcType=INTEGER},
+          #{phone,jdbcType=VARCHAR},
+          #{email,jdbcType=VARCHAR},
+          #{avatar,jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <delete id="delete" parameterType="Long">
+        DELETE FROM user WHERE id=#{value}
+    </delete>
+
+    <update id="update" parameterType="User">
+        UPDATE user
+        SET
+          name=#{name,jdbcType=VARCHAR},
+          nickname=#{nickname,jdbcType=VARCHAR},
+          gender=#{gender,jdbcType=INTEGER},
+          phone=#{phone,jdbcType=VARCHAR},
+          email=#{email,jdbcType=VARCHAR},
+          avatar=#{avatar,jdbcType=VARCHAR}
+        WHERE id=#{id,jdbcType=BIGINT}
+    </update>
+
+    <select id="getPage" parameterType="Map" resultType="User">
+        SELECT <include refid="userColumns"/> FROM user
+        <where>
+            <if test="gender != null">
+                gender = #{gender,jdbcType=INTEGER}
+            </if>
+            <if test="name != null">
+                AND name LIKE CONCAT('%','${name}','%')
+            </if>
+        </where>
+        ORDER BY create_time DESC
+    </select>
+
+    <delete id="deleteMulti" parameterType="List">
+        DELETE FROM user WHERE id IN
+        <foreach collection="list" item="id" open="(" close=")" separator=",">
+          #{id}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.makeronly.user.repo.AccountMapper">
+
+    <select id="get" parameterType="String" resultType="Account">
+        SELECT id,user_id userId,type,identifier,credential
+        FROM account WHERE identifier=#{value,jdbcType=VARCHAR}
+    </select>
+    <insert id="save" parameterType="Account">
+        INSERT INTO account(id,user_id,type,identifier,credential)
+        VALUES (
+            #{id,jdbcType=INTEGER},
+            #{userId,jdbcType=INTEGER},
+            #{type,jdbcType=VARCHAR},
+            #{identifier,jdbcType=VARCHAR},
+            #{credential,jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <delete id="delete" parameterType="Long">
+        DELETE FROM account WHERE id=#{value}
+    </delete>
+</mapper>

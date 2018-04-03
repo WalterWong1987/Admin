@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.makeronly.rbac.repo.RoleMapper">
+    <select id="get" parameterType="Long" resultType="Role">
+        SELECT id,name,description FROM role WHERE id=#{vale}
+    </select>
+    <insert id="save" parameterType="Role">
+        INSERT INTO role(id,name,description) VALUES (
+          #{id,jdbcType=BIGINT},#{name,jdbcType=VARCHAR},#{description,jdbcType=VARCHAR}
+        )
+    </insert>
+    <delete id="delete" parameterType="Long">
+        DELETE FROM role WHERE id=#{value}
+    </delete>
+    <update id="update" parameterType="Role">
+        UPDATE role
+        SET name=#{name,jdbcType=VARCHAR},description=#{description,jdbcType=VARCHAR}
+        WHERE id=#{id,jdbcType=BIGINT}
+    </update>
+    <select id="getPage" resultType="Role">
+        SELECT id,name,description FROM role ORDER BY create_time DESC
+    </select>
+
+    <delete id="deleteMulti" parameterType="List">
+        DELETE FROM role WHERE id IN
+        <foreach collection="list" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

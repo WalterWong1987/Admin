@@ -1,0 +1,43 @@
+spring:
+  application:
+    name: user
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/mkadmin?useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC&useSSL=true
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+    # druid 配置
+    druid:
+      initial-size: 5
+      min-idle: 5
+      max-active: 10
+      max-wait: 60000
+      pool-prepared-statements: true
+      max-pool-prepared-statement-per-connection-size: 50
+      max-open-prepared-statements: 100
+      filters: stat,wall,log4j2
+      filter:
+        stat:
+          merge-sql: true
+          slow-sql-millis: 5000
+      use-global-data-source-stat: true
+
+server:
+  port: 2001
+
+eureka:
+  client:
+    service-url:
+       defaultZone: http://10.0.0.213:1000/eureka/
+       # defaultZone: http://localhost:1000/eureka/
+       # defaultZone: http://eureka.didispace.com/eureka/
+  instance:
+    # 注册时使用ip而不是主机名
+    prefer-ip-address: true
+    lease-renewal-interval-in-seconds: 5
+    lease-expiration-duration-in-seconds: 10
+
+mybatis:
+  config-location: classpath:config/mybatis-config.xml
+  mapper-locations: classpath:mapper/*.xml
